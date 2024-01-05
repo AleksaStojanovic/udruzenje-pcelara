@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Prijavi se{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="username">Korisničko ime</label>
+    <input name="username" id="username" required>
+    <label for="password">Šifra</label>
+    <input type="password" name="password" id="password" required>
+    <input type="submit" value="Prijavi se">
+  </form>
+{% endblock %}

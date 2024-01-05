@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<form method="post">
+    
+    <label for="comments">Komentar</label>
+    <textarea name="comments" id="comments" placeholder="Dodaj novi komentar" >{{ request.form['comments'] }} </textarea>
+    <input type="submit" value="Sačuvaj">
+  </form>
+
+
+  {% endblock %}

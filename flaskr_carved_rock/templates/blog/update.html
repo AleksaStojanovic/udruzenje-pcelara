@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Uredi "{{ post['title'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="title">Naslov</label>
+    <input name="title" id="title" value="{{ request.form['title'] or post['title'] }}" required>
+    <label for="body">Sadržaj</label>
+    <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
+    <input type="submit" value="Sačuvaj">
+  </form>
+  <hr>
+  <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
+    <input class="danger" type="submit" value="Obriši" onclick="return confirm('Da li ste sigurni?');">
+  </form>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Objava: "{{ post['title'] }}"{% endblock %}</h1>
+{% endblock %}
+
+
+
+{% block content %}
+<form method="post">
+  <label for="title">Naslov</label>
+  <input readonly name="title" id="title" value="{{ request.form['title'] or post['title'] }}" required>
+  <label for="body">Sadržaj</label>
+  <textarea readonly name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
+  <a href="{{ url_for('blog.new_comment', id=post['id']) }}">Dodaj novi Komentar</a>
+  {% if post.comments %}
+  {% for comment in post.comments %}
+  <p>{{ comment }}</p>
+  <small class="text-muted">Posted by Anonymous</small>
+  <hr>
+  {% endfor %}
+  {% else %}
+  <p class="placeholder-comment">Be the first to comment on this item</p>
+  {% endif %}
+</form>
+
+
+
+{% endblock %}
