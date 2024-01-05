@@ -3,19 +3,24 @@ from sqlalchemy.orm import validates
 
 from flaskr_carved_rock.sqla import sqla
 
+
+from sqlalchemy.ext.mutable import MutableList
+from sqlalchemy import PickleType
+
+
 class Post(sqla.Model):
     id = sqla.Column(sqla.Integer, primary_key=True)
-    author_id = sqla.Column(sqla.Integer, sqla.ForeignKey('user.id'), nullable=False)
-    author = sqla.relationship('User', backref=sqla.backref('posts', lazy=True))
+    author_id = sqla.Column(sqla.Integer, sqla.ForeignKey("user.id"), nullable=False)
+    author = sqla.relationship("User", backref=sqla.backref("posts", lazy=True))
     created = sqla.Column(sqla.DateTime, nullable=False, default=datetime.utcnow)
     title = sqla.Column(sqla.Text, nullable=False)
     body = sqla.Column(sqla.Text, nullable=False)
-    comments = []
+    comments = sqla.Column(MutableList.as_mutable(PickleType), default=[])
 
-    @validates('title')
+    @validates("title")
     def validate_not_empty(self, key, value):
         if not value:
-            raise ValueError(f'{key.capitalize()} is required.')
+            raise ValueError(f"{key.capitalize()} is required.")
         return value
 
     def __repr__(self):
